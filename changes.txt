@@ -1,0 +1,12 @@
+Desired: Add bounds on optimization (but he wants linear constraints)
+
+Fixed: Problem with checking for independent correlation structure when alpha is a vector of length > 1
+
+ANOTHER PROBLEM:  fm1 <- geem(resp ~ age * smoke, id=id, data = ohio, family = binomial,
+	corstr = "ar1")
+
+:> QIC(fm1)
+#Error in fitted.geem(xi) : could not find function "InvLink"
+
+
+TRY TO REDUCE SUMMARY SPLITS

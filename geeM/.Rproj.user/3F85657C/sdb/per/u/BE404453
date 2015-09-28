@@ -1,0 +1,17 @@
+{
+    "contents" : "`getQIC.geem` <-\n  function(x, typeR = FALSE) {\n    \n    fam <- tryCatch(family(x)$family, error = function(e){return(\"quasi\")})\n    \n    xi <- if(x$corr != \"independence\")\n      update(x, corstr = \"independence\") else x\n    MuMIn:::.qic2(x$y,  fitted(x), as.matrix(x$var),\n                  fitted(xi), as.matrix(xi$naiv.var), fam,\n                  typeR = typeR)\n  }\n\n\nlibrary(geepack)\ndata(ohio)\nlibrary(MuMIn)\nLinkFun <- function(arg){qcauchy(arg)}\nInvLink <- function(arg){pcauchy(arg)}\nInvLinkDeriv <- function(arg){dcauchy(arg)}\nVarFun <- function(arg){arg*(1-arg)}\nFunList <- list(LinkFun, VarFun, InvLink, InvLinkDeriv)\nfit <- geem(resp ~ age + smoke + age:smoke, id=id, data=ohio, family=FunList, corstr=\"exch\", scale.fix=TRUE)\n\nfit2 <- geem(resp ~ age + smoke + age:smoke, id=id, data=ohio, family=binomial, corstr=\"exch\", scale.fix=TRUE)\nQIC(fit)\nQIC(fit2)\n\n\n\nfit3 <- geem(resp ~ age + smoke + age:smoke, id=id, data=ohio, family=quasibinomial, corstr=\"exch\", scale.fix=TRUE)\nQIC(fit3)\n",
+    "created" : 1430326835771.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "3980456376",
+    "id" : "BE404453",
+    "lastKnownWriteTime" : 179268464,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
